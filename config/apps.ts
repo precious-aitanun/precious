@@ -32,6 +32,9 @@ export interface AppScreenshot {
   src: string;
   alt: string;
   caption: string;
+  // Set true to show a small "New" badge on this screenshot — use for
+  // screens introduced in the current latest version, not the whole app.
+  isNew?: boolean;
 }
 
 export interface FeatureItem {
@@ -126,19 +129,26 @@ export const apps: AppEntry[] = [
 
     screenshots: [
       {
-        src: "/screenshots/precious-osce.jpg",
-        alt: "OSCE Clerking Station showing a timed history-taking case with a checklist rubric",
-        caption: "Practice real OSCE-style stations with a timer and an examiner's checklist rubric",
-      },
-      {
-        src: "/screenshots/precious-ai-assistant.jpg",
-        alt: "AI Study Assistant chat screen for medical questions and quiz answer confirmation",
-        caption: "Ask a question or paste quiz options — the AI Study Assistant confirms and explains",
+        src: "/screenshots/precious-home.jpg",
+        alt: "Precious home dashboard showing overall mastery progress and Global Exam Mode",
+        caption: "Your progress at a glance the moment you open the app",
       },
       {
         src: "/screenshots/precious-subjects-materials.jpg",
         alt: "Pediatrics subject screen showing Past Questions, Topic Quizzes, and Study Materials PDFs",
         caption: "Past questions, topic quizzes, and study material PDFs, organized by subject",
+      },
+      {
+        src: "/screenshots/precious-osce.jpg",
+        alt: "OSCE Clerking Station showing a timed history-taking case with a checklist rubric",
+        caption: "Practice real OSCE-style stations with a timer and an examiner's checklist rubric",
+        isNew: true,
+      },
+      {
+        src: "/screenshots/precious-ai-assistant.jpg",
+        alt: "AI Study Assistant chat screen for medical questions and quiz answer confirmation",
+        caption: "Ask a question or paste quiz options — the AI Study Assistant confirms and explains",
+        isNew: true,
       },
     ],
 
