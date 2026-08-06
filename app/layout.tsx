@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { appConfig } from "@/config/app.config";
+import { siteConfig } from "@/config/apps";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
@@ -25,11 +25,11 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: `${appConfig.name} — ${appConfig.tagline}`,
-  description: appConfig.shortDescription,
+  title: `${siteConfig.name} — ${siteConfig.description}`,
+  description: siteConfig.description,
   openGraph: {
-    title: `${appConfig.name} — ${appConfig.tagline}`,
-    description: appConfig.shortDescription,
+    title: siteConfig.name,
+    description: siteConfig.description,
     type: "website",
   },
 };

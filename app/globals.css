@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Theme variables — space-separated "R G B" so Tailwind can apply its own
+ * opacity modifiers (e.g. bg-accent/40) via rgb(var(--accent-rgb) / <alpha>).
+ * Default (:root) is Precious' periwinkle. Wrap a subtree in
+ * className="theme-teal" (see app/precious-for-residents/page.tsx) to
+ * switch every accent-colored element in it to Precious for Residents' teal
+ * — no component changes needed.
+ */
+:root {
+  --accent-rgb: 174 184 245; /* #AEB8F5 */
+  --accent-strong-rgb: 135 144 232; /* #8790E8 */
+  --accent-soft-rgb: 37 43 71; /* #252B47 */
+}
+
+.theme-teal {
+  --accent-rgb: 45 212 191; /* #2DD4BF */
+  --accent-strong-rgb: 20 184 166; /* #14B8A6 */
+  --accent-soft-rgb: 16 48 44; /* dark teal surface */
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -13,12 +33,15 @@
 
   body {
     @apply bg-bg text-ink font-body antialiased;
+    /* Neutral (not accent-tinted) so this ambient glow looks right under
+       either app's theme, since <body> sits above the .theme-teal wrapper
+       and can't inherit its accent variables. */
     background-image: radial-gradient(
         50% 40% at 85% -10%,
-        rgba(174, 184, 245, 0.12) 0%,
-        rgba(174, 184, 245, 0) 60%
+        rgba(244, 246, 251, 0.05) 0%,
+        rgba(244, 246, 251, 0) 60%
       ),
-      radial-gradient(40% 30% at 5% 15%, rgba(174, 184, 245, 0.06) 0%, rgba(174, 184, 245, 0) 60%);
+      radial-gradient(40% 30% at 5% 15%, rgba(244, 246, 251, 0.025) 0%, rgba(244, 246, 251, 0) 60%);
     background-repeat: no-repeat;
   }
 
@@ -31,6 +54,18 @@
     outline: 2px solid #aeb8f5;
     outline-offset: 3px;
     border-radius: 4px;
+  }
+
+  /* Accent-scoped overrides for the pieces above that <body> itself can't
+     inherit (see note above) — keeps selection/focus color correct inside
+     a .theme-teal subtree (e.g. the Precious for Residents page/card). */
+  .theme-teal ::selection {
+    background: rgb(var(--accent-rgb) / 0.35);
+    color: #fff;
+  }
+
+  .theme-teal :focus-visible {
+    outline-color: rgb(var(--accent-rgb));
   }
 }
 

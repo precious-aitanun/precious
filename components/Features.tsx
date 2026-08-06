@@ -1,7 +1,7 @@
 import Reveal from "./Reveal";
-import { appConfig } from "@/config/app.config";
+import type { AppEntry } from "@/config/apps";
 
-export default function Features() {
+export default function Features({ app }: { app: AppEntry }) {
   return (
     <section id="features" className="px-5 py-20 sm:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
@@ -10,12 +10,12 @@ export default function Features() {
             Why it works
           </span>
           <h2 className="mt-3 max-w-xl font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-            Built for how clinical students actually study
+            {app.featuresHeadline}
           </h2>
         </Reveal>
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {appConfig.features.map((feature, i) => (
+          {app.features.map((feature, i) => (
             <Reveal key={feature.title} delay={i * 60}>
               <div className="h-full rounded-2xl border border-border bg-surface p-6 shadow-card transition-colors hover:border-accent/40">
                 <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-lg bg-accent-soft">

@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { appConfig } from "@/config/app.config";
+import type { AppVersion } from "@/config/apps";
 
 export interface ApkInfo {
   url: string;
@@ -14,15 +14,16 @@ function formatBytes(bytes: number): string {
 }
 
 /**
- * Resolves download info for the APK.
+ * Resolves download info for a single APK version.
  * - If apkPath is an external URL (http/https), size isn't read locally
  *   (nothing to stat) — it just links straight to it.
  * - If apkPath is a local /public path, the real file size is read from
  *   disk automatically, so replacing the file keeps the displayed size
- *   accurate with zero manual edits.
+ *   accurate with zero manual edits. If the file hasn't been placed yet,
+ *   the page still renders fine, just without a size badge.
  */
-export function getApkInfo(): ApkInfo {
-  const { apkPath, apkFileName } = appConfig;
+export function getApkInfo(version: AppVersion): ApkInfo {
+  const { apkPath, apkFileName } = version;
   const isExternal = /^https?:\/\//i.test(apkPath);
 
   if (isExternal) {
@@ -38,7 +39,11 @@ export function getApkInfo(): ApkInfo {
       sizeLabel: formatBytes(stats.size),
     };
   } catch {
-    // File not placed yet — page still renders, just without a size badge.
     return { url: apkPath, fileName: apkFileName, sizeLabel: null };
   }
+}
+
+/** Resolves download info for every version of an app, latest first. */
+export function getApkInfos(versions: AppVersion[]): ApkInfo[] {
+  return versions.map(getApkInfo);
 }

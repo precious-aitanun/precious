@@ -1,7 +1,14 @@
-# MBBS Quiz Library — Landing Page
+# Precious — Apps Landing Site
 
-A Next.js + Tailwind landing page for the MBBS Quiz Library Android app:
-overview, screenshots, features, and a direct APK download.
+A Next.js + Tailwind landing site for **two** Android apps:
+
+- **Precious** (MBBS Quiz Library) — `/precious`
+- **Precious for Residents** — `/precious-for-residents`
+
+The homepage (`/`) is a hub that links to both. Each app has its own full
+page (hero, features, screenshots, download, FAQ) built from the same
+shared components, just themed differently — periwinkle for Precious,
+teal for Precious for Residents.
 
 ## Deploying to Vercel
 
@@ -9,8 +16,6 @@ overview, screenshots, features, and a direct APK download.
    directly on this folder).
 2. Import the repo at https://vercel.com/new.
 3. No configuration needed — Vercel auto-detects Next.js and it just works.
-
-That's it. No environment variables, no build settings to touch.
 
 ## Running locally
 
@@ -21,66 +26,94 @@ npm run dev
 
 Open http://localhost:3000.
 
-## Where to put the APK
+## Where to put the APKs
 
-Drop your APK file at:
+Three files, three exact locations:
 
-```
-public/downloads/app-latest.apk
-```
+| File | Goes in | What it is |
+|---|---|---|
+| `precious-v1.1.0.apk` | `public/downloads/precious/` | Precious — latest (OSCE + AI Study Assistant + study material PDFs update) |
+| `precious-v1.0.0.apk` | `public/downloads/precious/` | Precious — previous release (rename your existing `app-latest.apk` to this) |
+| `precious-for-residents-v1.0.0.apk` | `public/downloads/precious-for-residents/` | Precious for Residents — first release |
 
-The download button already points here by default, and the file size shown
-on the page (e.g. "24 MB") is read automatically from the real file — you
-never have to type a size in manually.
+Each folder has a `PUT_APK_HERE.txt` with the same instructions — delete
+those once the real files are in place.
 
-**Alternative — host it externally instead** (recommended once the file gets
-large, or if you'd rather not redeploy the whole site just to ship a new
-build): open `config/app.config.ts` and set `apkPath` to a full URL, e.g.
-your existing Cloudflare R2 bucket:
+The main **Download APK** button on each app page always serves that
+app's latest version. Older versions (right now, just Precious v1.0.0)
+appear under a "Previous versions" toggle in the download section, so
+existing users can still grab the old build if needed. File size shown
+on the page is read automatically from the real file at build time —
+never typed in manually.
+
+**Alternative — host APKs externally instead** (recommended once files
+get large, or if you'd rather not redeploy the whole site to ship a new
+build): open `config/apps.ts` and set that version's `apkPath` to a full
+URL, e.g. your Cloudflare R2 bucket:
 
 ```ts
-apkPath: "https://pub-xxxxxxxx.r2.dev/downloads/app-latest.apk",
+apkPath: "https://pub-xxxxxxxx.r2.dev/downloads/precious-v1.1.0.apk",
 ```
-
-When `apkPath` is a full `http(s)://` URL, the button links straight there
-instead of looking for a local file.
 
 ## Updating content
 
-Everything editable lives in **`config/app.config.ts`** — one file, plainly
-commented. You should not need to touch component code for routine updates:
+Everything editable for **both apps** lives in **`config/apps.ts`** — one
+file, plainly commented, with an `apps` array (Precious is `apps[0]`,
+Precious for Residents is `apps[1]`) plus a shared `siteConfig` (site
+name, hub description, contact email). You should not need to touch
+component code for routine updates:
 
-| To change...                          | Edit...                                    |
-|----------------------------------------|---------------------------------------------|
-| App name, tagline, description         | `config/app.config.ts` → top fields          |
-| Version number / release date          | `config/app.config.ts` → version fields      |
-| Screenshots                            | Add files to `public/screenshots/`, list them in `config/app.config.ts` → `screenshots` |
-| Features list                          | `config/app.config.ts` → `features`          |
-| Subjects covered                       | `config/app.config.ts` → `subjects`          |
-| "How it works" steps                   | `config/app.config.ts` → `steps`             |
-| FAQ                                    | `config/app.config.ts` → `faq`               |
-| APK file / download link               | see "Where to put the APK" above             |
-| Contact email                          | `config/app.config.ts` → `contactEmail`      |
+| To change... | Edit... |
+|---|---|
+| App name, tagline, description | `config/apps.ts` → that app's top fields |
+| Version number / release notes / release date | `config/apps.ts` → that app's `versions` array (add a new entry at the **top** to ship an update; old entries automatically become "Previous versions") |
+| Screenshots | Add files to `public/screenshots/`, list them in that app's `screenshots` array |
+| Features | That app's `features` array |
+| Subjects (Precious) / Modules (Residents) | That app's `coverage.items` array |
+| "How it works" steps | That app's `steps` array |
+| FAQ | That app's `faq` array |
+| APK files | See "Where to put the APKs" above |
+| Contact email | `siteConfig.contactEmail` (shared across both apps + the hub) |
 
 Push to your git remote and Vercel redeploys automatically.
+
+### Adding a third app later
+
+1. Copy one of the two entries in the `apps` array in `config/apps.ts`,
+   give it a unique `slug`, and fill in its content.
+2. Copy `app/precious-for-residents/page.tsx` to
+   `app/<your-slug>/page.tsx` and swap the `slug` string it looks up.
+3. If you want it in its own color, add a `.theme-<name>` block in
+   `app/globals.css` (copy the `.theme-teal` block) and wrap that page's
+   content in `<div className="theme-<name>">` the same way the Residents
+   page does.
+4. Add a card for it on the hub (`app/page.tsx`).
 
 ## Project structure
 
 ```
-app/                Next.js App Router pages, layout, global styles
-components/          All page sections (Hero, Features, Screenshots, etc.)
-config/app.config.ts All editable site content — start here
-lib/apk.ts           Reads the real APK file size automatically
-public/screenshots/  App screenshots shown on the page
-public/downloads/    Put app-latest.apk here (see above)
+app/                         Next.js App Router
+  page.tsx                   Hub — links to both apps
+  precious/page.tsx           Precious app page
+  precious-for-residents/page.tsx   Precious for Residents app page
+  layout.tsx, globals.css     Shared shell, fonts, theme variables
+components/                  All page sections — each takes an `app` prop
+config/apps.ts               All editable content for both apps — start here
+lib/apk.ts                   Reads real APK file sizes automatically
+public/screenshots/          App screenshots
+public/downloads/precious/                  Precious APKs go here
+public/downloads/precious-for-residents/    Precious for Residents APK goes here
 ```
 
 ## Design notes
 
-Colors, type, and the subject-icon palette are pulled directly from the
-actual app's UI (dark navy background, periwinkle accent, pastel subject
-icons) so the site reads as a natural extension of the product rather than
-a generic template layered on top of it.
+Colors, type, and the subject/module icon palette are pulled from the
+actual apps' UI (dark navy background, pastel subject icons) so the site
+reads as a natural extension of the products. Both apps share one dark
+navy background; only the accent color switches per app via a CSS
+variable (`--accent-rgb` etc., set in `app/globals.css` and toggled by a
+`.theme-teal` wrapper) — periwinkle for Precious, teal for Precious for
+Residents.
 
 - Display type: Space Grotesk
 - Body type: IBM Plex Sans

@@ -15,10 +15,14 @@ const config: Config = {
         border: "#242C42",
         ink: "#F4F6FB",
         muted: "#98A2B8",
+        // Values come from CSS custom properties set in globals.css so the
+        // same components can re-theme per app (see .theme-teal there).
+        // Default (:root) is Precious' violet; wrap a subtree in
+        // className="theme-teal" for Precious for Residents.
         accent: {
-          DEFAULT: "#AEB8F5",
-          strong: "#8790E8",
-          soft: "#252B47",
+          DEFAULT: "rgb(var(--accent-rgb) / <alpha-value>)",
+          strong: "rgb(var(--accent-strong-rgb) / <alpha-value>)",
+          soft: "rgb(var(--accent-soft-rgb) / <alpha-value>)",
         },
         subject: {
           peds: { bg: "#D9F0DC", fg: "#2F7D46" },
@@ -35,7 +39,7 @@ const config: Config = {
       },
       backgroundImage: {
         "glow-accent":
-          "radial-gradient(60% 60% at 50% 40%, rgba(174,184,245,0.25) 0%, rgba(174,184,245,0) 70%)",
+          "radial-gradient(60% 60% at 50% 40%, rgb(var(--accent-rgb) / 0.25) 0%, rgb(var(--accent-rgb) / 0) 70%)",
       },
       boxShadow: {
         card: "0 1px 0 0 rgba(255,255,255,0.04) inset, 0 8px 24px -12px rgba(0,0,0,0.6)",

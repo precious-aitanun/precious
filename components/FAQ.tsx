@@ -1,7 +1,7 @@
 import Reveal from "./Reveal";
-import { appConfig } from "@/config/app.config";
+import type { AppEntry } from "@/config/apps";
 
-export default function FAQ() {
+export default function FAQ({ app }: { app: AppEntry }) {
   return (
     <section id="faq" className="border-t border-border/60 px-5 py-20 sm:px-8 lg:py-28">
       <div className="mx-auto max-w-3xl">
@@ -13,7 +13,7 @@ export default function FAQ() {
         </Reveal>
 
         <div className="mt-10 divide-y divide-border">
-          {appConfig.faq.map((item, i) => (
+          {app.faq.map((item, i) => (
             <Reveal key={item.question} delay={i * 50}>
               <details className="group py-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-[15px] font-medium text-ink">
