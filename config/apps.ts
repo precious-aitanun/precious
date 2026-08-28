@@ -90,7 +90,7 @@ export interface AppEntry {
 export const siteConfig = {
   name: "Precious",
   description: "Two focused apps for doctors in training — from MBBS clinical finals to residency wards.",
-  contactEmail: "paitanun35@gmail.com",
+  contactEmail: "aitanun@precious.me.uk",
 };
 
 export const apps: AppEntry[] = [
