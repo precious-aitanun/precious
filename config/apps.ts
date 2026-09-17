@@ -90,7 +90,7 @@ export interface AppEntry {
 export const siteConfig = {
   name: "Precious",
   description: "Two focused apps for doctors in training — from MBBS clinical finals to residency wards.",
-  contactEmail: "paitanun35@gmail.com",
+  contactEmail: "aitanun@precious.me.uk",
 };
 
 export const apps: AppEntry[] = [
@@ -108,6 +108,14 @@ export const apps: AppEntry[] = [
     minAndroidVersion: "8.0 (Oreo)",
 
     versions: [
+      {
+        version: "1.2.0",
+        versionCode: 3,
+        releaseDate: "2026-10-17",
+        releaseNotes: "Added My Workspace and transitioned to subscription payment model",
+        apkPath: "/downloads/precious/precious-v1.2.0.apk",
+        apkFileName: "Precious-v1.2.0.apk",
+      },
       {
         version: "1.1.0",
         versionCode: 2,
@@ -187,24 +195,9 @@ export const apps: AppEntry[] = [
           "Pull questions from every subject into one shuffled, timed-feeling session that mirrors what the real exam actually feels like.",
       },
       {
-        title: "Study materials, attached",
-        description:
-          "Reference lecture notes and PDFs are attached directly to each subject, synced alongside the quizzes so they're there when you need them, even offline.",
-      },
-      {
         title: "Mastery tracking",
         description:
           "Every question you've seen is scored as got-it, missed, or unseen, rolled up into one clear mastery percentage per subject.",
-      },
-      {
-        title: "Organized by subject",
-        description:
-          "Past questions, topic quizzes, and study materials are kept cleanly separate within each of the five core clinical subjects, so you always know what you're studying.",
-      },
-      {
-        title: "Built for exam prep",
-        description:
-          "Shuffle questions, shuffle answers, and choose your session length — 10 quick questions or the full bank.",
       },
     ],
 
