@@ -39,9 +39,10 @@ export const videos: Record<string, VideoInput[]> = {
   // ---- Precious ------------------------------------------------------
   precious: [
     "https://youtu.be/HL1yd-z8FMs?si=WCEPFoyCX5ju1fON",
-    "https://youtube.com/shorts/83Nef80t1yU?si=LcorM8MY1VW69qCN",
-    "https://youtube.com/shorts/evPppq_3SZo?si=em0Xmfjw5itWXQDk",
     "https://youtube.com/shorts/yC29NNR5DKQ?si=-SvtRBSOg-ciR8XD",
+    "https://youtube.com/shorts/evPppq_3SZo?si=em0Xmfjw5itWXQDk",
+    "https://youtube.com/shorts/83Nef80t1yU?si=LcorM8MY1VW69qCN",
+
   ],
 
   // ---- Precious for Residents (no videos yet) ----------------------------
